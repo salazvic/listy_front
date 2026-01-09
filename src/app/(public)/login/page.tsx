@@ -64,7 +64,7 @@ export default function LoginPage() {
       console.log("respuesta me:", me)
 
       const listas = await ListService.getLists()
-      console.log("respuesta listas:", listas)
+      console.log("respuesta listas usuario:", listas)
 
       console.log("antes de hacer push")
       router.push('/lists')
