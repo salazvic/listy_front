@@ -10,7 +10,6 @@ import { useAuthStore } from "@/stores/auth.store"
 import { authService } from "@/services/auth.service"
 
 import Link from "next/link"
-import { ListService } from "@/services/list.service"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -63,11 +62,7 @@ export default function LoginPage() {
       const me = await authService.me()
       console.log("respuesta me:", me)
 
-      const listas = await ListService.getLists()
-      console.log("respuesta listas usuario:", listas)
-
       console.log("antes de hacer push")
-      await new Promise(r => setTimeout(r, 500));
       router.push('/lists')
       console.log("hice push");
     } catch (err: any) {

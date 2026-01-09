@@ -36,6 +36,7 @@ export default function ProtectedLayout({ children }: Readonly<{
     } 
     getItems()
   }, [])
+console.log("PROTECTED LAYOUT PASÓ")
 
   return (
     <ProtectedRoute>

@@ -4,9 +4,9 @@ import type { NextRequest } from 'next/server'
 export function middleware(req: NextRequest) {
   const token = req.cookies.get('access_token')?.value
   const { pathname } = req.nextUrl
-console.log("entrando a middleware")
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/register')
   const isProtectedRoute = pathname.startsWith('/lists')
+  console.log("entrando a middleware")
 
   // NO logueado → ruta protegida
   if (!token && isProtectedRoute) {
@@ -19,6 +19,7 @@ console.log("entrando a middleware")
     return NextResponse.redirect(new URL('/lists', req.url))
     console.log("Logueado → auth pages")
   }
+console.log("MIDDLEWARE PASÓ")
 
   return NextResponse.next()
 }
