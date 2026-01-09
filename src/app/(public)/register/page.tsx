@@ -141,6 +141,7 @@ export default function RegisterPage() {
 
           <motion.input
             variants={itemVariants}
+            type="password"
             placeholder="Contraseña"
             className="w-full border rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-black"
             {...register("password")}
@@ -174,7 +175,7 @@ export default function RegisterPage() {
                 whileTap={{scale: 0.95}}
                 className="hover:underline"
               >
-                Registrar
+                Iniciar sesion
               </motion.span>
             </Link>
           </motion.p>
