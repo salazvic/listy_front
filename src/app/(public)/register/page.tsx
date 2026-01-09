@@ -112,20 +112,8 @@ export default function RegisterPage() {
             variants={itemVariants}
             className="text-2xl text-gray-600 font-bold mb-4 text-center"
           >
-            Iniciar sesión
+            Registrarse
           </motion.h1>
-
-          <motion.input
-            variants={itemVariants}
-            className="w-full border rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-black"
-            placeholder="Email"
-            {...register("email")}
-          />
-          {errors.email && (
-            <p className="text-red-500 text-xs mb-2">
-            {errors.email.message}
-            </p>
-          )}
 
           <motion.input
             variants={itemVariants}
@@ -136,6 +124,18 @@ export default function RegisterPage() {
           {errors.name && (
             <p className="text-red-500 text-xs mb-2">
             {errors.name.message}
+            </p>
+          )}
+
+          <motion.input
+            variants={itemVariants}
+            className="w-full border rounded-lg px-3 py-2 mb-3 focus:outline-none focus:ring-2 focus:ring-black"
+            placeholder="Email"
+            {...register("email")}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-xs mb-2">
+            {errors.email.message}
             </p>
           )}
 
@@ -174,7 +174,7 @@ export default function RegisterPage() {
                 whileTap={{scale: 0.95}}
                 className="hover:underline"
               >
-                Iniciar Sesion
+                Registrar
               </motion.span>
             </Link>
           </motion.p>
