@@ -11,7 +11,7 @@ let queue: (() => void)[] = []
 
 api.interceptors.request.use((config) => {
   const access_token = useAuthStore.getState().access_token
-
+ 
   if(access_token){
     config.headers.Authorization = `Bearer ${access_token}`
   }

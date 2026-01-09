@@ -155,7 +155,7 @@ export default function RegisterPage() {
             disabled={isSubmitting}
             className="w-full bg-black text-white py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
           >
-            {isSubmitting ? 'Entrando...' : 'Entrar'}
+            {isSubmitting ? 'Registrando...' : 'Registrarse'}
           </button>
 
           <motion.p 
