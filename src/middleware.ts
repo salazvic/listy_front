@@ -16,8 +16,8 @@ export function middleware(req: NextRequest) {
 
   // Logueado → auth pages
   if (token && isAuthRoute) {
-    return NextResponse.redirect(new URL('/lists', req.url))
     console.log("Logueado → auth pages")
+    return NextResponse.redirect(new URL('/lists', req.url))
   }
 console.log("MIDDLEWARE PASÓ")
 
