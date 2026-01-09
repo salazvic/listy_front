@@ -21,12 +21,12 @@ export default function ProtectedLayout({ children }: Readonly<{
   
   useUserSocket(user?.id! )
     
-  useEffect(() => {
+  /* useEffect(() => {
     if (!access_token) {
       router.replace('/login')
     }
     console.log("LAYOUT_PROTECTED: tiene access_token")
-  }, [access_token])
+  }, [access_token]) */
 
   useEffect(() => {
     const getItems = async() => {
