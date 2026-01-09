@@ -39,7 +39,7 @@ export default function ListsPage() {
   const deleteList = async (id: string) => {
     await ListService.deleteList(id)
   }
-
+console.log("lists page loaded")
   return (
     <div className="flex flex-col gap-6 mb-6">
       <Modal 
