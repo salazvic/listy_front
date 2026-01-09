@@ -59,7 +59,7 @@ export default function LoginPage() {
       useAuthStore.getState().setAccess_token(res.access.access_token)
       console.log("acces_token:", useAuthStore.getState().access_token)
       
-      const me = authService.me()
+      const me = await authService.me()
       console.log("respuesta me:", me)
 
       console.log("antes de hacer push")
