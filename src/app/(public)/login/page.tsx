@@ -10,6 +10,7 @@ import { useAuthStore } from "@/stores/auth.store"
 import { authService } from "@/services/auth.service"
 
 import Link from "next/link"
+import { ListService } from "@/services/list.service"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -61,6 +62,9 @@ export default function LoginPage() {
       
       const me = await authService.me()
       console.log("respuesta me:", me)
+
+      const listas = await ListService.getLists()
+      console.log("respuesta listas:", listas)
 
       console.log("antes de hacer push")
       router.push('/lists')
