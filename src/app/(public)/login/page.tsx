@@ -57,6 +57,8 @@ export default function LoginPage() {
         res.access.access_token
       )
       useAuthStore.getState().setAccess_token(res.access.access_token)
+      console.log(useAuthStore.getState().access_token)
+      console.log("antes de hacer push")
       router.push('/lists')
     } catch (err: any) {
       console.error(err)
