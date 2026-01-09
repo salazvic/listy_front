@@ -13,7 +13,7 @@ export default function ProtectedRoute({children}: {children: ReactNode}) {
   useEffect(() => {
     if(!isAuth) router.replace('/login')
   }, [isAuth])
-
+console.log("PROTECTED_ROUTE: esta autenticado")
   if(!isAuth) return null
   return children
 }
