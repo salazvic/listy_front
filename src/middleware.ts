@@ -25,5 +25,5 @@ console.log("MIDDLEWARE PASÓ")
 }
 
 export const config = {
-  matcher: ['/lists/:path*', '/login', '/register'],
+  matcher: [],
 }
