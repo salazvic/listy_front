@@ -10,6 +10,7 @@ export const getUserSocket = () => {
   if (typeof window === 'undefined') return null
   if(!userSocket) {
     userSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/users', {
+      transports: ['websocket'],
       withCredentials: true
     })
   }  
@@ -22,6 +23,7 @@ export const getListSocket = () => {
   if(!listSocket) {
     listSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/lists', 
     {
+      transports: ['websocket'],
       withCredentials: true
     })
   }
@@ -35,6 +37,7 @@ export const getItemSocket = () => {
   if(!itemSocket) {
     itemSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/items', 
     {
+      transports: ['websocket'],
       withCredentials: true
     })
   }
@@ -48,6 +51,7 @@ export const getListItemSocket = () => {
   if(!listItemSocket) {
     listItemSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/items_lists', 
     {
+      transports: ['websocket'],
       withCredentials: true
     })
   }
@@ -60,6 +64,7 @@ export const getSharedListSocket = () => {
 
   if (!sharedListSocket) {
     sharedListSocket = io(`${process.env.NEXT_PUBLIC_WS_URL}/ws/shared_list`, {
+      transports: ['websocket'],
       withCredentials: true,
     })
   }
