@@ -39,11 +39,11 @@ export default function ProtectedLayout({ children }: Readonly<{
 console.log("PROTECTED LAYOUT PASÓ")
 
   return (
-    <ProtectedRoute>
+    <>
       <Navbar />
       <main className='pt-[72px]'>
         {children}
       </main>
-    </ProtectedRoute>
+    </>
   )
 }
