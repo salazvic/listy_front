@@ -67,7 +67,9 @@ export default function LoginPage() {
       console.log("respuesta listas usuario:", listas)
 
       console.log("antes de hacer push")
+      await new Promise(r => setTimeout(r, 500));
       router.push('/lists')
+      console.log("hice push");
     } catch (err: any) {
       console.error(err)
     }
