@@ -6,7 +6,8 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/register')
   const isProtectedRoute = pathname.startsWith('/lists')
-  console.log("entrando a middleware")
+
+  console.log("token middleware:", token)
 
   // NO logueado → ruta protegida
   if (!token && isProtectedRoute) {
@@ -19,7 +20,6 @@ export function middleware(req: NextRequest) {
     console.log("Logueado → auth pages")
     return NextResponse.redirect(new URL('/lists', req.url))
   }
-console.log("MIDDLEWARE PASÓ")
 
   return NextResponse.next()
 }

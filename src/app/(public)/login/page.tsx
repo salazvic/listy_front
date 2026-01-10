@@ -51,16 +51,11 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const res = await authService.login(data)
-      console.log("Respuesta login:", res)
       useAuthStore.getState().setAuth(
         res.user,
         res.access.access_token
       )
       useAuthStore.getState().setAccess_token(res.access.access_token)
-      console.log("acces_token:", useAuthStore.getState().access_token)
-      
-      const me = await authService.me()
-      console.log("respuesta me:", me)
 
       console.log("antes de hacer push")
       router.push('/lists')
