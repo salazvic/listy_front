@@ -3,7 +3,6 @@ import type { NextRequest } from 'next/server'
 
 export function proxy(req: NextRequest) {
   const tokenAcces = req.cookies.get('access_token')?.value
-  console.log("token access:", tokenAcces)
   const authHeader = req.headers.get('authorization') || ''
   const token = authHeader.replace('Bearer ', '')
   
@@ -11,10 +10,11 @@ export function proxy(req: NextRequest) {
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/register')
   const isProtectedRoute = pathname.startsWith('/lists')
 
-  console.log("Entrado a middleware")
-  console.log("token middleware:", token)
+  console.log("Entrado a proxy")
+  console.log("token:", token)
+  console.log("token access:", tokenAcces)
 
-  // NO logueado → ruta protegida
+  /* // NO logueado → ruta protegida
   if (!token && isProtectedRoute) {
     console.log(" NO logueado → ruta protegida")
     return NextResponse.redirect(new URL('/login', req.url))
@@ -24,11 +24,11 @@ export function proxy(req: NextRequest) {
   if (token && isAuthRoute) {
     console.log("Logueado → auth pages")
     return NextResponse.redirect(new URL('/lists', req.url))
-  }
+  } */
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/lists/:path*', '/login', '/register']
+  matcher: []
 }
