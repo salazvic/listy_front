@@ -1,14 +1,15 @@
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 
 export default async function Home() {
-  const cookiesStore = await cookies()
+ const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+    credentials: "include",
+    cache: "no-store",
+  });
 
-  const hasAcces = cookiesStore.has('access_token')
-  console.log("cookie en layout principal:", hasAcces)
-
-  if(hasAcces) {
-    redirect('/lists')
+  console.log("RES homePage:", res)
+  if (res.ok) {
+    redirect('/lists');
   }
-  redirect('/login')
+
+  redirect('/login');
 }
