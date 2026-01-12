@@ -18,6 +18,7 @@ export default function ProtectedLayout({ children }: Readonly<{
   const setItems = useItemStore(s => s.setItem)
   const user = useAuthStore(s => s.user)
   
+  console.log("user logueado y guardado en store:", user)
   
   useUserSocket(user?.id! )
     
