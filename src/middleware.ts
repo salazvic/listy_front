@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function proxy(req: NextRequest) {
+export function middleware(req: NextRequest) {
   const tokenAcces = req.cookies.get('access_token')?.value
   const authHeader = req.headers.get('authorization') || ''
   const token = authHeader.replace('Bearer ', '')
