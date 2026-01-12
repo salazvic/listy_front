@@ -17,15 +17,10 @@ export default function ProtectedLayout({ children }: Readonly<{
   const setItems = useItemStore(s => s.setItem)
   const user = useAuthStore(s => s.user)
   
-  console.log("user logueado y guardado en store:", user)
-  console.log("access_token y guardado en store:", access_token)
-  
   useUserSocket(user?.id! )
     
   useEffect(() => {
-    console.log("usuario existe layout:", user)
     if (!user) {
-      console.log("regresa al login, no encontro usuario")
       router.replace('/login')
     }
   }, [user])
