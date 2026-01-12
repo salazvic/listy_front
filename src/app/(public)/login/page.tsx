@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -8,16 +9,19 @@ import { motion } from "motion/react"
 import { loginSchema, LoginFormData } from "@/schemas/login.schema"
 import { useAuthStore } from "@/stores/auth.store"
 import { authService } from "@/services/auth.service"
-
 import Link from "next/link"
+import { toast } from 'sonner'
+
 
 export default function LoginPage() {
   const router = useRouter()
   const user = useAuthStore(s => s.user)
 
-  if(user) {
-    router.push('/lists')
-  }
+  useEffect(() => {
+    if (user) {
+      router.push('/lists')
+    }
+  }, [user, router])
 
   const {
     register,
@@ -65,6 +69,9 @@ export default function LoginPage() {
       router.push('/lists')
     } catch (err: any) {
       console.error(err)
+      toast.error(
+        err?.response?.data?.message || 'Email o contraseña incorrectos'
+      )
     }
   }
 
