@@ -19,14 +19,15 @@ export default function ProtectedLayout({ children }: Readonly<{
   const user = useAuthStore(s => s.user)
   
   console.log("user logueado y guardado en store:", user)
+  console.log("access_token y guardado en store:", access_token)
   
   useUserSocket(user?.id! )
     
   useEffect(() => {
-    if (!access_token) {
+    if (!user) {
       router.replace('/login')
     }
-  }, [access_token])
+  }, [user])
 
   useEffect(() => {
     const getItems = async() => {
