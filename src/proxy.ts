@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const tokenAcces = req.cookies.get('access_token')?.value
   console.log("token access:", tokenAcces)
   const authHeader = req.headers.get('authorization') || ''
@@ -30,5 +30,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/lists/:path*', '/login', '/register']],
+  matcher: ['/lists/:path*', '/login', '/register']
 }
