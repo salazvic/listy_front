@@ -10,7 +10,7 @@ export function middleware(req: NextRequest) {
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/register')
   const isProtectedRoute = pathname.startsWith('/lists') */
 
-  console.log("Entrado a proxy")
+  console.log("Entrado a middleware")
   console.log("token:", token)
   console.log("token access:", tokenAcces)
 
