@@ -1,4 +1,3 @@
-// app/(protected)/layout.tsx
 'use client'
 
 import { useAuthStore } from '@/stores/auth.store'
