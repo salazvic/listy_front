@@ -25,7 +25,6 @@ export default function ProtectedLayout({ children }: Readonly<{
     if (!access_token) {
       router.replace('/login')
     }
-    console.log("LAYOUT_PROTECTED: tiene access_token")
   }, [access_token])
 
   useEffect(() => {
@@ -36,7 +35,6 @@ export default function ProtectedLayout({ children }: Readonly<{
     } 
     getItems()
   }, [])
-console.log("PROTECTED LAYOUT PASÓ")
 
   return (
     <ProtectedRoute>

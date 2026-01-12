@@ -1,5 +1,5 @@
 'use client'
- console.log("LOGIN COMPONENT MOUNTED")
+
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -57,9 +57,7 @@ export default function LoginPage() {
       )
       useAuthStore.getState().setAccess_token(res.access.access_token)
 
-      console.log("antes de hacer push")
       router.push('/lists')
-      console.log("hice push");
     } catch (err: any) {
       console.error(err)
     }

@@ -14,7 +14,7 @@ export function middleware(req: NextRequest) {
   console.log("token middleware:", token)
 
   // NO logueado → ruta protegida
-  /* if (!token && isProtectedRoute) {
+  if (!token && isProtectedRoute) {
     console.log(" NO logueado → ruta protegida")
     return NextResponse.redirect(new URL('/login', req.url))
   }
@@ -23,11 +23,11 @@ export function middleware(req: NextRequest) {
   if (token && isAuthRoute) {
     console.log("Logueado → auth pages")
     return NextResponse.redirect(new URL('/lists', req.url))
-  } */
+  }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: [],
+  matcher: ['/lists/:path*', '/login', '/register'],
 }
