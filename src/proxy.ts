@@ -5,10 +5,10 @@ export function proxy(req: NextRequest) {
   const tokenAcces = req.cookies.get('access_token')?.value
   const authHeader = req.headers.get('authorization') || ''
   const token = authHeader.replace('Bearer ', '')
-  
+ /*  
   const { pathname } = req.nextUrl
   const isAuthRoute = pathname.startsWith('/login') || pathname.startsWith('/register')
-  const isProtectedRoute = pathname.startsWith('/lists')
+  const isProtectedRoute = pathname.startsWith('/lists') */
 
   console.log("Entrado a proxy")
   console.log("token:", token)
