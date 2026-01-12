@@ -13,6 +13,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const loadUser = async () => {
       try {
         const user = await authService.me()
+        console.log("Usuario existe AuthProvider:", user)
         setAuth(user, null)
       } catch (error) {
         try {

@@ -24,7 +24,9 @@ export default function ProtectedLayout({ children }: Readonly<{
   useUserSocket(user?.id! )
     
   useEffect(() => {
+    console.log("usuario existe layout:", user)
     if (!user) {
+      console.log("regresa al login, no encontro usuario")
       router.replace('/login')
     }
   }, [user])

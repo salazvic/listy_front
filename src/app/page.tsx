@@ -1,13 +1,24 @@
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { cookies } from "next/headers";
+import { useAuthStore } from "@/stores/auth.store";
+import { useEffect } from "react";
+import { authService } from "@/services/auth.service";
 
 export default async function Home() {
-  const cookiesStore = await cookies()
+  const router = useRouter()
+  const setAuth = useAuthStore(s => s.setAuth)
 
-  const hasAcces = cookiesStore.has('access_token')
+  useEffect(() => {
+    const check = async () => {
+      try {
+        const user = await authService.me()
+        setAuth(user, null)
+        router.replace('/lists')
+      } catch (error) {
+        router.replace('/login')
+      }
+    }
 
-  if(hasAcces) {
-    redirect('/lists')
-  }
-  redirect('/login')
+    check()
+  }, [])
 }
