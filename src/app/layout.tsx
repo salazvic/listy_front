@@ -31,11 +31,13 @@ export default function RootLayout({
       <body className={`bg- min-h-screen bg-[#33415c]`}>
         <Toaster richColors/>
         <Providers>
-          <SocketProvider>
-            <main className="max-w-7xl mx-auto px-4 py-6">
-              {children}
-            </main>
-          </SocketProvider>
+          <AuthProvider>          
+            <SocketProvider>
+              <main className="max-w-7xl mx-auto px-4 py-6">
+                {children}
+              </main>
+            </SocketProvider>
+          </AuthProvider>
         </Providers>
       </body>
     </html>
