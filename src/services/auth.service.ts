@@ -17,6 +17,7 @@ export const authService = {
       '/auth/me',
       {withCredentials: true}
     )
+    console.log("respuesta me:", data)
     return data
   },
 
