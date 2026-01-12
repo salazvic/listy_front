@@ -13,6 +13,11 @@ import Link from "next/link"
 
 export default function LoginPage() {
   const router = useRouter()
+  const user = useAuthStore(s => s.user)
+
+  if(user) {
+    router.push('/lists')
+  }
 
   const {
     register,
