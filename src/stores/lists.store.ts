@@ -74,17 +74,22 @@ export const useListStore = create<ListState>((set) => ({
 
   // Una lista
   upsertList: (list) =>
-    set((state) => ({
-      listsById: {
-        ...state.listsById,
-        [list.id]: {
-          ...state.listsById[list.id],
-          ...list,
-          items: list.items?.map(normalizeItem),
-          isFull: true
-        },
+    set((state) => {
+      const existing = state.listsById[list.id]
+
+      return{
+        listsById: {
+          ...state.listsById,
+          [list.id]: {
+            ...existing,
+            ...list,
+            role: existing?.role ?? list.role,
+            items: list.items?.map(normalizeItem),
+            isFull: true
+          },
+        }
       }
-    })),
+    }),
 
   deleteList: (id) => 
     set((state) => {
