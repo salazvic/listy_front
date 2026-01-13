@@ -23,7 +23,7 @@ export default function SharedListdPage() {
     getShared()
   }, [])
 
-  const sharedNewlist = lists.filter((list: any) => list.role !== 'OWNER')
+  const sharedNewlist = lists.filter((list: any) => list.role === 'editor' || list.role === 'viewer')
 
   return (
    <div className="flex flex-col gap-6 mb-6">   

@@ -18,7 +18,7 @@ export default function ListsPage() {
   const setLists = useListStore(s => s.setLists)
   const setAllUsers = useUserStore(s => s.setAllUsers)
 
-  const lists = listsAll.filter((list: any) => list.role === 'OWNER')
+  const lists = listsAll.filter((list: any) => list.role !== 'editor' || list.role !== 'viewer')
 
   useEffect(() => {
     const getLists = async() => {
