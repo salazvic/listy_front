@@ -37,7 +37,7 @@ export default function ProtectedLayout({ children }: Readonly<{
   return (
     <ProtectedRoute>
       <Navbar />
-      <main className='pt-[72px]'>
+      <main className='pt-18'>
         {children}
       </main>
     </ProtectedRoute>
