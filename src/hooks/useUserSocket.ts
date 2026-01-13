@@ -9,7 +9,7 @@ export function useUserSocket(userId: string | null) {
   const upsertList = useListStore(s => s.upsertList)
   const deleteList = useListStore(s => s.deleteList)
   const updateList = useListStore(s => s.updateList)
-  const addUSerList = useListStore(s => s.addUserList)
+  const addUserList = useListStore(s => s.addUserList)
 
   useEffect(() => {
     if (!userId) return 
@@ -42,8 +42,10 @@ export function useUserSocket(userId: string | null) {
     })
 
     userSocket.on(Events.SHARED_ADDED, (payload) => {
-      addUSerList(payload.listId, payload)
+      if (payload.userId !== userId) return
+      addUserList(payload.listId, payload)
     })
+
 
     return () => {
       userSocket.emit(Events.USER_DISCONNECTED, {userId})

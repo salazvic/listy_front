@@ -7,7 +7,7 @@ import { useListStore } from "@/stores/lists.store"
 import { useEffect, useState } from "react"
 import { useShallow } from "zustand/react/shallow"
 import { useUserStore } from "@/stores/useUserStore"
-import { UserService } from "@/services/user.service"
+import { UserService } from "@/services/user.service" 
 
 export default function ListsPage() {  
   const [open, setOpen] = useState(false)
@@ -39,7 +39,7 @@ export default function ListsPage() {
   const deleteList = async (id: string) => {
     await ListService.deleteList(id)
   }
-console.log("lists page loaded")
+  
   return (
     <div className="flex flex-col gap-6 mb-6">
       <Modal 

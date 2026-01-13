@@ -209,6 +209,7 @@ export const useListStore = create<ListState>((set) => ({
     set((state) => {
       const list = state.listsById[listId]
       if(!list) return state
+      if (list.role === 'OWNER') return state
 
       const alreadyExists = list?.shared?.some(
         user => user?.id === newShared.id

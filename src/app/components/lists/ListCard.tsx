@@ -82,7 +82,7 @@ export function ListCard({ list, onSubmit }: Props) {
               {list.name}
             </h2>
             <span className="text-gray-400 text-sm block">
-              su rol es: {list.role === 'viewer' ? 'observador' : 'editor'}
+              su rol es: {list.role === 'OWNER' ? 'OWNER' : list.role === 'viewer' ? 'observador' : 'editor'}
             </span>
           </div>
 
