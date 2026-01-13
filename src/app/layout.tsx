@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg- min-h-screen bg-[#33415c]`}>
-        <Toaster richColors/>
+        <Toaster richColors position="top-center" className="z-[9999]"/>
         <Providers>
           <AuthProvider>          
             <SocketProvider>
