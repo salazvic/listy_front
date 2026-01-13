@@ -22,16 +22,18 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   res => res,
   async error => {
-    const auth = useAuthStore.getState()
+    const originalRequest = error.config  
+    
     console.log('[INTERCEPTOR]', error.response?.status, error.config?.url)
-    const originalRequest = error.config 
+
+    if (originalRequest?.url?.includes('/auth/refresh')) {
+      return Promise.reject(error)
+    }
 
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      auth.hasLoggedIn &&
-      !originalRequest.url.includes('/auth/login') &&
-      !originalRequest.url.includes('/auth/refresh')
+      !originalRequest.url.includes('/auth/login')
     ) {
       originalRequest._retry = true
 
@@ -44,16 +46,16 @@ api.interceptors.response.use(
       isRefreshing = true
 
       try {
-        const {data} = await api.post('/auth/refresh')
-
-        useAuthStore.getState().setAccess_token(data.access_token)
+        await api.post('/auth/refresh', null, {
+          withCredentials: true
+        })
 
         queue.forEach(cb => cb())
         queue = []
 
         return api(originalRequest)
       } catch {
-        useAuthStore.getState().logout()
+        console.warn('Refresh fallo')
         return Promise.reject(error)
       } finally {
         isRefreshing = false
