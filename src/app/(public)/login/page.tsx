@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -16,7 +16,6 @@ import { toast } from 'sonner'
 export default function LoginPage() {
   const router = useRouter()
   const user = useAuthStore(s => s.user)
-  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -27,7 +26,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: {errors}
+    formState: {errors, isSubmitting}
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema)
   })
@@ -59,7 +58,6 @@ export default function LoginPage() {
   }
 
   const onSubmit = async (data: LoginFormData) => {
-    setSubmitting(true)
     try {
       const res = await authService.login(data)
       useAuthStore.getState().setAuth(
@@ -67,10 +65,9 @@ export default function LoginPage() {
         res.access.access_token
       )
       useAuthStore.getState().setAccess_token(res.access.access_token)
-      setSubmitting(false)
+
       router.push('/lists')
     } catch (err: any) {
-      setSubmitting(false)
       toast.error(
         err?.response?.data?.message || 'Email o contraseña incorrectos'
       )
@@ -79,8 +76,8 @@ export default function LoginPage() {
   }
 
 useEffect(() => {
-  console.log("valor submitting:", submitting)
-}, [submitting])
+  console.log("valor isSubmitting:", isSubmitting)
+}, [isSubmitting])
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
       {/* LEFT IMAGE */}
@@ -160,10 +157,10 @@ useEffect(() => {
           )}
 
           <button
-            disabled={submitting}
+            disabled={isSubmitting}
             className="w-full bg-black text-white py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
           >
-            {submitting ? 'Entrando...' : 'Entrar'}
+            {isSubmitting ? 'Entrando...' : 'Entrar'}
           </button>
 
           <motion.p 
