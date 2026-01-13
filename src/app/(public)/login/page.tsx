@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -16,6 +16,7 @@ import { toast } from 'sonner'
 export default function LoginPage() {
   const router = useRouter()
   const user = useAuthStore(s => s.user)
+  const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -26,7 +27,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: {errors, isSubmitting}
+    formState: {errors}
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema)
   })
@@ -58,6 +59,7 @@ export default function LoginPage() {
   }
 
   const onSubmit = async (data: LoginFormData) => {
+    setSubmitting(true)
     try {
       const res = await authService.login(data)
       useAuthStore.getState().setAuth(
@@ -65,7 +67,7 @@ export default function LoginPage() {
         res.access.access_token
       )
       useAuthStore.getState().setAccess_token(res.access.access_token)
-
+      setSubmitting(false)
       router.push('/lists')
     } catch (err: any) {
       toast.error(
@@ -76,8 +78,8 @@ export default function LoginPage() {
   }
 
 useEffect(() => {
-  console.log("valor isSubmitting:", isSubmitting)
-}, [isSubmitting])
+  console.log("valor isSubmitting:", submitting)
+}, [submitting])
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
       {/* LEFT IMAGE */}
@@ -157,10 +159,10 @@ useEffect(() => {
           )}
 
           <button
-            disabled={isSubmitting}
+            disabled={submitting}
             className="w-full bg-black text-white py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
           >
-            {isSubmitting ? 'Entrando...' : 'Entrar'}
+            {submitting ? 'Entrando...' : 'Entrar'}
           </button>
 
           <motion.p 
