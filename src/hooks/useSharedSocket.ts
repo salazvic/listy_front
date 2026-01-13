@@ -16,6 +16,7 @@ export function useSharedSocket(idList: string) {
     sharedSocket.emit(Events.LIST_JOIN, { listId: idList }) 
     
     sharedSocket.on(Events.SHARED_ADDED, (payload) => {
+      console.log("EVENTO SHARED ADDED")
       newUserAdded(payload.listId, payload)
     })
 
