@@ -22,11 +22,14 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   res => res,
   async error => {
+    const auth = useAuthStore.getState()
+    console.log('[INTERCEPTOR]', error.response?.status, error.config?.url)
     const originalRequest = error.config 
 
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
+      auth.hasLoggedIn &&
       !originalRequest.url.includes('/auth/login') &&
       !originalRequest.url.includes('/auth/refresh')
     ) {

@@ -12,7 +12,7 @@ import { useUserSocket } from '@/hooks/useUserSocket';
 export default function ProtectedLayout({ children }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { access_token } = useAuthStore()
+
   const router = useRouter()
   const setItems = useItemStore(s => s.setItem)
   const user = useAuthStore(s => s.user)
