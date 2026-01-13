@@ -24,6 +24,7 @@ export function useUserSocket(userId: string | null) {
     })
     )
     userSocket.on(Events.LIST_CREATED, (newList) => {
+      console.log("[EVENT] LIST CREATED")
       upsertList(newList)
     })
 
@@ -43,6 +44,7 @@ export function useUserSocket(userId: string | null) {
 
     userSocket.on(Events.SHARED_ADDED, (payload) => {
       if (payload.userId !== userId) return
+      console.log("[EVENT] SHARED ADDED")
       addUserList(payload.listId, payload)
     })
 
