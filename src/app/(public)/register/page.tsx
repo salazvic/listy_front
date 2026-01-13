@@ -101,11 +101,8 @@ export default function RegisterPage() {
           <div className="absolute inset-0 bg-black/50"/>
         </div>
 
-        <motion.form
+        <form
           onSubmit={handleSubmit(onSubmit)}
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
           className="relative z-10 w-full max-w-sm rounded-2xl bg-white/90 backdrop-blur-md p-6 shadow-xl text-gray-600"
         >
           <motion.h1 
@@ -179,7 +176,7 @@ export default function RegisterPage() {
               </motion.span>
             </Link>
           </motion.p>
-        </motion.form>
+        </form>
       </motion.div>
     </div>
   )
