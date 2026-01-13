@@ -68,10 +68,10 @@ export default function LoginPage() {
 
       router.push('/lists')
     } catch (err: any) {
-      console.error(err)
       toast.error(
         err?.response?.data?.message || 'Email o contraseña incorrectos'
       )
+      throw err
     }
   }
 
