@@ -21,7 +21,7 @@ export default function SharedListdPage() {
       setSharedList(sharedList)
     }
     getShared()
-  }, [lists])
+  }, [])
 
   const sharedNewlist = lists.filter((list: any) => list.role !== 'OWNER')
 

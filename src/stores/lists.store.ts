@@ -56,10 +56,13 @@ export const useListStore = create<ListState>((set) => ({
   // Todas las listas
   setLists: (lists) =>
     set((state) => {
+      console.log("entro a setLists")
       const mapped = { ...state.listsById }
 
       lists.forEach((list) => {
         const prev = mapped[list.id]
+
+        if(prev?.role === 'OWNER') return
 
         mapped[list.id] = {
           ...prev,
@@ -212,6 +215,7 @@ export const useListStore = create<ListState>((set) => ({
   
   addUserList: (listId, newShared) => {
     set((state) => {
+      console.log("entro a addUserList")
       const list = state.listsById[listId]
       if(!list) return state
       if (list.role === 'OWNER') return state
