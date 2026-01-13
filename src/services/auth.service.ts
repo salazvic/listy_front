@@ -29,7 +29,7 @@ export const authService = {
       )
       return res.data
     } catch (err) {
-      return err
+      throw err
     }
   },
 
