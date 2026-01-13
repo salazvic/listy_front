@@ -26,7 +26,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: {errors, isSubmitting, isSubmitSuccessful}
+    formState: {errors, isSubmitting}
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema)
   })
@@ -75,6 +75,9 @@ export default function LoginPage() {
     }
   }
 
+useEffect(() => {
+  console.log("valor isSubmitting:", isSubmitting)
+}, [isSubmitting])
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
       {/* LEFT IMAGE */}
