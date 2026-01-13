@@ -217,14 +217,13 @@ export const useListStore = create<ListState>((set) => ({
       console.log("entrando a addUserList")
       const list = state.listsById[listId]
       if(!list) return state
-      if (list.role === 'OWNER') return state
 
       const alreadyExists = list?.shared?.some(
         user => user?.id === newShared.id
       )
 
       if(alreadyExists) return state
-      console.log("devolviendo en adduserList")
+
       return {
         listsById: {
           ...state.listsById,
