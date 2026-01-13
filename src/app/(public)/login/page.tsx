@@ -70,6 +70,7 @@ export default function LoginPage() {
       setSubmitting(false)
       router.push('/lists')
     } catch (err: any) {
+      setSubmitting(false)
       toast.error(
         err?.response?.data?.message || 'Email o contraseña incorrectos'
       )
@@ -78,7 +79,7 @@ export default function LoginPage() {
   }
 
 useEffect(() => {
-  console.log("valor isSubmitting:", submitting)
+  console.log("valor submitting:", submitting)
 }, [submitting])
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
