@@ -9,27 +9,23 @@ interface User {
 interface AuthState {
   user: User | null
   access_token: string | null
-  refresh_token: string | null
   isAuthenticated: boolean
-  setAuth: (user: User, token: string | null, refresh: string | null) => void
-  setAccess_token: (token: string) => void
-  setTokens: (a: string | null, r: string | null) => void
-  logout: () => void,
   hasLoggedIn: boolean
+
+  setAuth: (user: User) => void
+  setAccess_token: (token: string) => void
+  logout: () => void,
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   access_token: null,
-  refresh_token: null,
   isAuthenticated: false,
   hasLoggedIn: false,
 
-  setAuth: (user, access, refresh) => 
+  setAuth: (user) => 
     set({
-      user,
-      access_token: access,
-      refresh_token: refresh,      
+      user,    
       isAuthenticated: true,
       hasLoggedIn: true
     }),
@@ -40,16 +36,10 @@ export const useAuthStore = create<AuthState>((set) => ({
     })
   },
 
-  setTokens: (access, refresh) => ({
-    access_token: access,
-    refresh_token: refresh
-  }),
-  
   logout: () => 
     set({
       user: null,
       access_token: null,
-      refresh_token: null,
       isAuthenticated: false
     })
 }))

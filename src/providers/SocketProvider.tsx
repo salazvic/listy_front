@@ -2,19 +2,18 @@
 
 import { useEffect } from 'react'
 import { useAuthStore } from '@/stores/auth.store'
-import { disconnectSockets, reconnectSockests } from '@/lib/socket'
+import { disconnectSockets, connectSockets } from '@/lib/socket'
 
 export function SocketProvider({ children }: { children: React.ReactNode }) {
-  const accessToken = useAuthStore(state => state.access_token)
-  const isAuth = !!accessToken
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated)
 
   useEffect(() => {
-    if (isAuth) {
-      reconnectSockests()
-    } else {
+    if (isAuthenticated) {
+      connectSockets()
+    } else { 
       disconnectSockets()
     }
-  }, [isAuth])
+  }, [isAuthenticated])
 
   return <>{children}</>
 }

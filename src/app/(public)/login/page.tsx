@@ -60,12 +60,7 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const res = await authService.login(data)
-      useAuthStore.getState().setAuth(
-        res.user,
-        res.access_token,
-        res.refresh_token
-      )
-      useAuthStore.getState().setAccess_token(res.access_token)
+      useAuthStore.getState().setAuth(res.user)
 
       router.push('/lists')
     } catch (err: any) {
