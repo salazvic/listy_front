@@ -19,6 +19,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       } catch (error) {
         try {
           const tokens = await authService.refresh()
+          console.log("AUTHPROVIDER refreshtoken:", tokens)
 
           if (!tokens?.access_token) {
             throw new Error('No access token')

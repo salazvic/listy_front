@@ -26,43 +26,14 @@ api.interceptors.response.use(
     const auth = useAuthStore.getState() 
     const originalRequest = error.config  
     
-    console.log('[INTERCEPTOR]', error.response?.status, error.config?.url)
-
-   /*  if (originalRequest?.url?.includes('/auth/refresh')) {
-      return Promise.reject(error)
-    } */
+    console.log(`[INTERCEPTOR] ${error.response?.status, error.config?.url} error: ${error.response?.data?.message}`)
 
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
       auth.refresh_token
-      //!originalRequest.url.includes('/auth/login')
     ) {
       originalRequest._retry = true
-
-      /* if (isRefreshing) {
-        return new Promise(resolve => {
-          queue.push(() => resolve(api(originalRequest)))
-        })
-      }
-
-      isRefreshing = true 
-
-      try {
-        await api.post('/auth/refresh', null, {
-          withCredentials: true
-        })
-
-        queue.forEach(cb => cb())
-        queue = []
-
-        return api(originalRequest)
-      } catch {
-        console.warn('Refresh fallo')
-        return Promise.reject(error)
-      } finally {
-        isRefreshing = false
-      }*/
 
       try {
         const { data } = await api.post(
