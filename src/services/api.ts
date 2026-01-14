@@ -22,28 +22,30 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   res => res,
   async error => {
+    const auth = useAuthStore.getState()
     const originalRequest = error.config  
     
     console.log('[INTERCEPTOR]', error.response?.status, error.config?.url)
 
-    if (originalRequest?.url?.includes('/auth/refresh')) {
+   /*  if (originalRequest?.url?.includes('/auth/refresh')) {
       return Promise.reject(error)
-    }
+    } */
 
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url.includes('/auth/login')
+      auth.refresh_token
+      //!originalRequest.url.includes('/auth/login')
     ) {
       originalRequest._retry = true
 
-      if (isRefreshing) {
+      /* if (isRefreshing) {
         return new Promise(resolve => {
           queue.push(() => resolve(api(originalRequest)))
         })
       }
 
-      isRefreshing = true
+      isRefreshing = true 
 
       try {
         await api.post('/auth/refresh', null, {
@@ -59,6 +61,29 @@ api.interceptors.response.use(
         return Promise.reject(error)
       } finally {
         isRefreshing = false
+      }*/
+
+      try {
+        const { data } = await api.post(
+          '/auth/refresh',
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${auth.refresh_token}`
+            }
+          }
+        )
+
+        auth.setTokens(data.access_token, data.refresh_token)
+        
+        api.defaults.headers.common.Authorization = `Bearer ${data.access_token}`
+
+        originalRequest.headers.Authorization = `Bearer ${data.access_token}`
+
+        return api(originalRequest)
+      } catch {
+        auth.logout()
+        return Promise.reject(error)
       }
     }
 

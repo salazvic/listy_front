@@ -7,9 +7,6 @@ import { useAuthStore } from '@/stores/auth.store'
 import { routes } from '@/lib/routes'
 import { Menu, X, LogOut, User } from 'lucide-react'
 import { authService } from '@/services/auth.service'
-import { useUserStore } from '@/stores/useUserStore'
-import { useItemStore } from '@/stores/item.store'
-import { useListStore } from '@/stores/lists.store'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -18,13 +15,7 @@ export default function Navbar() {
   const pathname = usePathname()
 
   const handleLogout = async () => {
-    await authService.logout()
-
-    useAuthStore.getState().logout()
-    useUserStore.getState().reset()
-    useItemStore.getState().reset()
-    useListStore.getState().reset()
-    
+    await authService.logout()    
     router.push('/login')
   }
 

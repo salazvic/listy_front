@@ -1,4 +1,8 @@
+import { useAuthStore } from "@/stores/auth.store";
 import api from "./api";
+import { useUserStore } from "@/stores/useUserStore";
+import { useItemStore } from "@/stores/item.store";
+import { useListStore } from "@/stores/lists.store";
 
 interface LoginPayload {
   email: string,
@@ -57,5 +61,12 @@ export const authService = {
       {},
       { withCredentials: true}
     )
+    delete api.defaults.headers.common.Authorization;
+    useAuthStore.getState().logout()
+    useUserStore.getState().reset()
+    useItemStore.getState().reset()
+    useListStore.getState().reset()
+    
+    return true
   }
 }

@@ -62,7 +62,8 @@ export default function LoginPage() {
       const res = await authService.login(data)
       useAuthStore.getState().setAuth(
         res.user,
-        res.access.access_token
+        res.access.access_token,
+        res.access.refresh_token
       )
       useAuthStore.getState().setAccess_token(res.access.access_token)
 
