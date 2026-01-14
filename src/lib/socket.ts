@@ -1,72 +1,40 @@
+import { useAuthStore } from '@/stores/auth.store'
 import { io, Socket } from 'socket.io-client'
 
-let userSocket: Socket | null = null
-let listSocket: Socket | null = null
-let itemSocket: Socket | null = null
-let listItemSocket: Socket | null = null
-let sharedListSocket: Socket | null = null
+let sockets: Socket[] = []
 
-export const getUserSocket = () => {
-  if (typeof window === 'undefined') return null
-  if(!userSocket) {
-    userSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/users', {
-      transports: ['websocket'],
-      withCredentials: true
-    })
-  }  
- return userSocket
-} 
+export const createSocket = (namespace: string) => {
+  const token = useAuthStore.getState().access_token
 
-export const getListSocket = () => {
-  if (typeof window === 'undefined') return null
-
-  if(!listSocket) {
-    listSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/lists', 
+  const socket = io(
+    `${process.env.NEXT_PUBLIC_WS_URL}${namespace}`,
     {
       transports: ['websocket'],
-      withCredentials: true
-    })
-  }
-  
- return listSocket
-} 
+      auth: { token }
+    }
+  )
 
-export const getItemSocket = () => {
-  if (typeof window === 'undefined') return null
-
-  if(!itemSocket) {
-    itemSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/items', 
-    {
-      transports: ['websocket'],
-      withCredentials: true
-    })
-  }
-  
- return itemSocket
+  sockets.push(socket)
+  return socket
 }
 
-export const getListItemSocket = () => {
-  if (typeof window === 'undefined') return null
-  
-  if(!listItemSocket) {
-    listItemSocket = io(process.env.NEXT_PUBLIC_WS_URL!+'/ws/items_lists', 
-    {
-      transports: ['websocket'],
-      withCredentials: true
-    })
-  }
-  
- return listItemSocket
+export const reconnectSockests = () => {
+  const token = useAuthStore.getState().access_token
+
+  sockets.forEach(socket => {
+    socket.disconnect()
+    socket.auth = { token }
+    socket.connect()
+  })
 }
 
-export const getSharedListSocket = () => {
-  if (typeof window === 'undefined') return null
-
-  if (!sharedListSocket) {
-    sharedListSocket = io(`${process.env.NEXT_PUBLIC_WS_URL}/ws/shared_list`, {
-      transports: ['websocket'],
-      withCredentials: true,
-    })
-  }
- return sharedListSocket
+export const disconnectSockets = () => {
+  sockets.forEach(s => s.disconnect())
+  sockets = []
 }
+
+export const userSocket = () => createSocket('/ws/users')
+export const listSocket = () => createSocket('/ws/lists')
+export const itemSocket = () => createSocket('/ws/items')
+export const listItemSocket = () => createSocket('/ws/items_lists')
+export const sharedListSocket = () => createSocket('/ws/shared_list')

@@ -1,6 +1,7 @@
 'use client'
 
 import { useUserSocket } from "@/hooks/useUserSocket"
+import { disconnectSockets, reconnectSockests } from "@/lib/socket"
 import api from "@/services/api"
 import { authService } from "@/services/auth.service"
 import { useAuthStore } from "@/stores/auth.store"
@@ -24,12 +25,14 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           }
 
           api.defaults.headers.common.Authorization = `Bearer ${tokens?.access_token}`
+          reconnectSockests()
 
           const user = await authService.me()
           setAuth(user, null, null)
         } catch {
-          delete api.defaults.headers.common.Authorization
           logout()
+          disconnectSockets()
+          delete api.defaults.headers.common.Authorization
         }
       }
     }

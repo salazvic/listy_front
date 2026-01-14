@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth.store'
+import { reconnectSockests } from '@/lib/socket'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -22,7 +23,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   res => res,
   async error => {
-    const auth = useAuthStore.getState()
+    const auth = useAuthStore.getState() 
     const originalRequest = error.config  
     
     console.log('[INTERCEPTOR]', error.response?.status, error.config?.url)
@@ -77,6 +78,8 @@ api.interceptors.response.use(
         auth.setTokens(data.access_token, data.refresh_token)
         
         api.defaults.headers.common.Authorization = `Bearer ${data.access_token}`
+
+        reconnectSockests()
 
         originalRequest.headers.Authorization = `Bearer ${data.access_token}`
 

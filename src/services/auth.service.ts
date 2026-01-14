@@ -3,6 +3,7 @@ import api from "./api";
 import { useUserStore } from "@/stores/useUserStore";
 import { useItemStore } from "@/stores/item.store";
 import { useListStore } from "@/stores/lists.store";
+import { disconnectSockets } from "@/lib/socket";
 
 interface LoginPayload {
   email: string,
@@ -66,6 +67,7 @@ export const authService = {
     useUserStore.getState().reset()
     useItemStore.getState().reset()
     useListStore.getState().reset()
+    disconnectSockets()  
     
     return true
   }
