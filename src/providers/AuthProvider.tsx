@@ -19,10 +19,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         try {
           const tokens = await authService.refresh()
 
+          console.log("AUTHPROVIDER tokens:", tokens)
           api.defaults.headers.common.Authorization = `Bearer ${tokens?.access_token}`
 
           const user = await authService.me()
-          
           setAuth(user, tokens?.access_token, tokens.refresh_token)
         } catch {
           delete api.defaults.headers.common.Authorization

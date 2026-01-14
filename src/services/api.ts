@@ -73,7 +73,7 @@ api.interceptors.response.use(
             }
           }
         )
-
+        console.log("DATA Interceptor:", data)
         auth.setTokens(data.access_token, data.refresh_token)
         
         api.defaults.headers.common.Authorization = `Bearer ${data.access_token}`
