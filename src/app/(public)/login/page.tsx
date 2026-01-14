@@ -60,7 +60,6 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const res = await authService.login(data)
-      console.log("LOGIN respuesta back", res)
       useAuthStore.getState().setAuth(
         res.user,
         res.access_token,

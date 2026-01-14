@@ -1,4 +1,4 @@
-import { getSharedListSocket } from "@/lib/socket";
+import { sharedListSocket } from "@/lib/socket";
 import { useListStore } from "@/stores/lists.store";
 import { Events } from "@/types/events.types";
 import { useEffect } from "react";
@@ -9,7 +9,7 @@ export function useSharedSocket(idList: string) {
   const changeRole = useListStore(s => s.changeRoleUser)
 
   useEffect(() => {
-    const sharedSocket = getSharedListSocket()
+    const sharedSocket = sharedListSocket()
 
     if(!sharedSocket) return
 

@@ -1,4 +1,4 @@
-import { getUserSocket } from "@/lib/socket"
+import { userSocket } from "@/lib/socket"
 import { useListStore } from "@/stores/lists.store"
 import { useUserStore } from "@/stores/useUserStore"
 import { Events } from "@/types/events.types"
@@ -13,26 +13,26 @@ export function useUserSocket(userId: string | null) {
 
   useEffect(() => {
     if (!userId) return 
-    const userSocket = getUserSocket()
+    const socketUser = userSocket()
 
-    if(!userSocket) return 
+    if(!socketUser) return 
 
-    userSocket.emit(Events.USER_CONNECTED, {userId})
+    socketUser.emit(Events.USER_CONNECTED, {userId})
 
-    userSocket.on(Events.USER_PROFILE, (payload => {
+    socketUser.on(Events.USER_PROFILE, (payload => {
       addUser(payload)
     })
     )
-    userSocket.on(Events.LIST_CREATED, (newList) => {
+    socketUser.on(Events.LIST_CREATED, (newList) => {
       upsertList(newList)
     })
 
-    userSocket.on(Events.LIST_DELETED, (idList) => {
+    socketUser.on(Events.LIST_DELETED, (idList) => {
       if(!idList) return
       deleteList(idList)
     })
 
-    userSocket.on(Events.LIST_UPDATED, (payload) => {
+    socketUser.on(Events.LIST_UPDATED, (payload) => {
 
       const activeListId = useListStore.getState().activeListId
 
@@ -41,19 +41,19 @@ export function useUserSocket(userId: string | null) {
       updateList(payload.id, payload.name)
     })
 
-    userSocket.on(Events.SHARED_ADDED, (payload) => {
+    socketUser.on(Events.SHARED_ADDED, (payload) => {
       if (payload.userId !== userId) return
       addUserList(payload.listId, payload)
     })
 
 
     return () => {
-      userSocket.emit(Events.USER_DISCONNECTED, {userId})
-      userSocket.off(Events.USER_PROFILE)
-      userSocket.off(Events.LIST_CREATED)
-      userSocket.off(Events.LIST_DELETED) 
-      userSocket.off(Events.LIST_UPDATED) 
-      userSocket.off(Events.SHARED_ADDED)
+      socketUser.emit(Events.USER_DISCONNECTED, {userId})
+      socketUser.off(Events.USER_PROFILE)
+      socketUser.off(Events.LIST_CREATED)
+      socketUser.off(Events.LIST_DELETED) 
+      socketUser.off(Events.LIST_UPDATED) 
+      socketUser.off(Events.SHARED_ADDED)
     }     
   },[userId])
 }

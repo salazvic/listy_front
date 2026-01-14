@@ -6,14 +6,20 @@ let sockets: Socket[] = []
 export const createSocket = (namespace: string) => {
   const token = useAuthStore.getState().access_token
 
+  if (!token) {
+    return null
+  }
+
   const socket = io(
     `${process.env.NEXT_PUBLIC_WS_URL}${namespace}`,
     {
       transports: ['websocket'],
-      auth: { token }
+      auth: { token },
+      autoConnect: false
     }
   )
 
+  socket.connect()
   sockets.push(socket)
   return socket
 }
