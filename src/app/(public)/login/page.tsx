@@ -62,7 +62,9 @@ export default function LoginPage() {
       const res = await authService.login(data)
       useAuthStore.getState().setAuth(res.user)
 
-      router.push('/lists')
+      //router.push('/lists')
+      window.location.href = '/lists'
+
     } catch (err: any) {
       toast.error(
         err?.response?.data?.message || 'Email o contraseña incorrectos'
