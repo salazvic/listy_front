@@ -63,10 +63,10 @@ export default function LoginPage() {
       console.log("LOGIN respuesta back", res)
       useAuthStore.getState().setAuth(
         res.user,
-        res.access.access_token,
-        res.access.refresh_token
+        res.access_token,
+        res.refresh_token
       )
-      useAuthStore.getState().setAccess_token(res.access.access_token)
+      useAuthStore.getState().setAccess_token(res.access_token)
 
       router.push('/lists')
     } catch (err: any) {
