@@ -36,7 +36,7 @@ bffApi.interceptors.response.use(
       originalRequest.url?.includes('/auth/login') ||
       originalRequest.url?.includes('/auth/refresh')
     ) {
-      return Promise.reject(error)
+      throw error
     }
 
     originalRequest._retry = true
@@ -50,7 +50,6 @@ bffApi.interceptors.response.use(
     isRefreshing = true
 
     try {
-      // 👉 refresh token
       const refreshResponse = await bffApi.post(
         '/auth/refresh',
         {},
