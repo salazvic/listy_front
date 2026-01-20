@@ -60,15 +60,11 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const res = await authService.login(data)
-      useAuthStore.getState().setAuth(res.user)
+      useAuthStore.getState().setAuth(res)
 
-      //router.push('/lists')
-      window.location.href = '/lists'
-
+      router.push('/lists')
     } catch (err: any) {
-      toast.error(
-        err?.response?.data?.message || 'Email o contraseña incorrectos'
-      )
+      toast.error('Email o contraseña incorrectos')
       throw err
     }
   }

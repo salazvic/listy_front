@@ -3,27 +3,27 @@ import { useAuthStore } from '@/stores/auth.store'
 import { connectSockets } from '@/lib/socket'
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: '/api',
   withCredentials: true,
 })
 
-let isRefreshing = false
+/* let isRefreshing = false
 let queue: (() => void)[] = []
 
 api.interceptors.response.use(
   res => res,
   async error => {
     const auth = useAuthStore.getState() 
-    const originalRequest = error.config  
-  /*   
-    console.log(
-      `[INTERCEPTOR] ${error.response?.status, error.config?.url} 
-      error: ${error.response?.data?.message}`
-    ) */
+    const originalRequest = error.config as any
+
+    const isAuthRoute = 
+      originalRequest.url?.includes('/auth/login') ||
+      originalRequest.url?.includes('/auth/refresh')
 
     if (
       error.response?.status === 401 &&
-      !originalRequest._retry
+      !originalRequest._retry &&
+      !isAuthRoute
     ) {
       originalRequest._retry = true
 
@@ -54,6 +54,6 @@ api.interceptors.response.use(
 
     return Promise.reject(error)
   }
-)
+) */
 
 export default api

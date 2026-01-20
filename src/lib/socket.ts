@@ -8,10 +8,11 @@ export const getSocket = (namespace: string) => {
     return sockets.get(namespace)
   } 
 
-  const socket = io(
+  const socket = io( 
     `${process.env.NEXT_PUBLIC_WS_URL}${namespace}`,
     {
       transports: ['websocket'],
+      withCredentials: true,
       autoConnect: false
     }
   )
@@ -21,11 +22,7 @@ export const getSocket = (namespace: string) => {
 }
 
 export const connectSockets = () => {
-  const token = useAuthStore.getState().access_token
-  if(!token) return
-
   sockets.forEach(socket => {
-    socket.auth = { token }
     if (!socket.connected) socket.connect()
   })
 }

@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "../lib/api";
 
 interface LoginPayload {
   email: string,
@@ -13,50 +13,27 @@ interface RegisterPayload {
 
 export const authService = {
   me: async () => {
-    const { data } = await api.get(
-      '/auth/me',
-      {withCredentials: true}
+    const { data } = await api.get('/auth/me')
+    return data
+  },
+
+  login: async(payload: LoginPayload) => {
+    const {data} = await api.post(
+      "/auth/login",
+      payload
     )
     return data
   },
 
-  login: async(data: LoginPayload) => {
-    try {
-      const res = await api.post(
-        "/auth/login",
-        data,
-        { withCredentials: true}
-      )
-      return res.data
-    } catch (err) { 
-      throw err
-    }
-  },
-
-  register: async(data: RegisterPayload) => {
-    const res = await api.post(
+  register: async(payload: RegisterPayload) => {
+    const {data} = await api.post(
       "/auth/register",
-      data,
-      { withCredentials: true}
+      payload,
     )
-    return res.data
-  },
-
-  refresh: async () => {
-    const res = await api.post(
-      "/auth/refresh",
-      {},
-      { withCredentials: true}
-    )
-    return res.data
+    return data
   },
 
   logout: async () => {
-    await api.post(
-      "/auth/logout",
-      {},
-      { withCredentials: true}
-    )    
-    return true
+    await api.post("/auth/logout")    
   }
 }

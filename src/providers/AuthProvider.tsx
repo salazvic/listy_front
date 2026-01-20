@@ -10,7 +10,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useAuthStore(state => state.logout)
 
   useEffect(() => {
-    const loadUser = async () => {
+    const loadUser = async () => { 
       try {
         const user = await authService.me()
         setAuth(user)
