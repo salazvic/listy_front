@@ -6,7 +6,7 @@ interface RetryConfig extends AxiosRequestConfig {
 }
 
 export const bffApi = axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
 })
 
