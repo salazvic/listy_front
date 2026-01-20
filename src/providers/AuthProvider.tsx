@@ -1,40 +1,26 @@
 'use client'
 
-import { disconnectSockets, connectSockets } from "@/lib/socket"
-import { authService } from "@/services/auth.service"
-import { useAuthStore } from "@/stores/auth.store"
-import { useEffect, ReactNode } from "react"
+import { useEffect, ReactNode } from 'react'
+import { authService } from '@/services/auth.service'
+import { useAuthStore } from '@/stores/auth.store'
+import { connectSockets, disconnectSockets } from '@/lib/socket'
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const setAuth = useAuthStore(state => state.setAuth)
   const logout = useAuthStore(state => state.logout)
 
   useEffect(() => {
-    const loadUser = async () => { 
+    const loadUser = async () => {
       try {
         const user = await authService.me()
         setAuth(user)
-        
-        if(useAuthStore.getState().access_token) {
-          connectSockets()
-        }
+        connectSockets()
       } catch {
-        try {
-          const tokens = await authService.refresh()
-          console.log("AUTHPROVIDER refreshtoken:", tokens)
-
-          const user = await authService.me()
-          setAuth(user)
-
-          if(useAuthStore.getState().access_token) {
-          connectSockets()
-        }
-        } catch {
-          logout()
-          disconnectSockets()
-        }
+        logout()
+        disconnectSockets()
       }
     }
+
     loadUser()
   }, [])
 
