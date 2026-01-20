@@ -14,7 +14,12 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const body = await req.json()
-  return bffApi.post('/lists', {
-    body: JSON.stringify(body)
+
+  const res = await  bffApi.post('/lists', body, {
+    headers: {
+      cookie: (await cookies()).toString()
+    }
   })  
+
+  return NextResponse.json(res.data, {status: 201})
 }
