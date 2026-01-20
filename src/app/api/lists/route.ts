@@ -5,7 +5,7 @@ import { NextResponse } from "next/server"
 export async function GET(req: Request) {
   const res = await bffApi.get('/lists', {
     headers: {
-      cookie: (await cookies()).toString()
+      cookie: cookies().toString()
     }
   })
 
@@ -17,7 +17,7 @@ export async function POST(req: Request) {
 
   const res = await  bffApi.post('/lists', body, {
     headers: {
-      cookie: (await cookies()).toString()
+      cookie: cookies().toString()
     }
   })  
 
