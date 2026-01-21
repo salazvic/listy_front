@@ -25,6 +25,8 @@ export default function ListsPage() {
       const data = await ListService.getLists()
       const dataUSers = await UserService.allUsers()
 
+      console.log(`lists: ${data} users: ${dataUSers}`)
+
       setAllUsers(dataUSers)
       setLists(data)
     }
