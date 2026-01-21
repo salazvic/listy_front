@@ -9,14 +9,14 @@ export async function POST(req: Request) {
   const res = NextResponse.json({ ok: true })
 
 console.log("resp login:", res)
-  res.cookies.set('access_token', data.access.accessToken, {
+  res.cookies.set('access_token', data.access_token, {
     httpOnly: true,
     sameSite: 'lax',
     secure: true,
     path: '/',
   })
 
-  res.cookies.set('refresh_token', data.access.refreshToken, {
+  res.cookies.set('refresh_token', data.refresh_token, {
     httpOnly: true,
     sameSite: 'lax',
     secure: true,
