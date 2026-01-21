@@ -2,10 +2,12 @@ import { bffApi } from "@/lib/api.bff";
 import { cookies } from "next/headers";
 
 export async function GET() {
+  const cookieStore = await cookies()
+
   try {
     const { data } = await bffApi.get('/auth/me', {
       headers: {
-        cookie: cookies.toString()
+        cookie: cookieStore.toString()
       }
     })
 
