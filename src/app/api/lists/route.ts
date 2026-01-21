@@ -4,16 +4,11 @@ import { NextResponse } from "next/server"
 
 export const dynamic = 'force-dynamic'
 
-async function forwardCookies(): Promise<string> {
-  const cookieStore = await cookies()
-  
-  return cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ')
-}
-
 export async function GET() {
+  const cookieStore = await cookies()
   const res = await bffApi.get('/lists', {
     headers: {
-      cookie: await forwardCookies()
+      Cookie: cookieStore.toString()
     }
   })
   return NextResponse.json(res.data)
