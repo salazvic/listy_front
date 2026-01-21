@@ -1,19 +1,27 @@
 import { bffApi } from "@/lib/api.bff";
-import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const body = await req.json()
 
-  const { data, headers } = await bffApi.post('/auth/login', body)
+  const { data } = await bffApi.post('/auth/login', body)
 
-  const setCookie = headers['set-cookie']
+  const res = NextResponse.json({ ok: true })
 
-  const response = Response.json(data)
+console.log("resp login:", res)
+  res.cookies.set('access_token', data.accessToken, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: true,
+    path: '/',
+  })
 
-  if(setCookie) {
-    response.headers.set('set-cookie', setCookie[0])
-  }
+  res.cookies.set('refresh_token', data.refreshToken, {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: true,
+    path: '/',
+  })
 
-  return response
-  
+  return res
 }
