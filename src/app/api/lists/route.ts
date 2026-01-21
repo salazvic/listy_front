@@ -5,7 +5,11 @@ import { NextResponse } from "next/server"
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const cookieStore = await cookies()
+  const cookie = await cookies()
+  const cookieStore = cookie
+    .getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join('; ')
   const res = await bffApi.get('/lists', {
     headers: {
       Cookie: cookieStore.toString()
