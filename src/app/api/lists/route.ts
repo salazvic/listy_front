@@ -3,12 +3,7 @@ import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export async function GET(req: Request) {
-  const res = await bffApi.get('/lists', {
-    headers: {
-      cookie: cookies().toString()
-    }
-  })
-
+  const res = await bffApi.get('/lists')
   return NextResponse.json(res.data)
 }
 
