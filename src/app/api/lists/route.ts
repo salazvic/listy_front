@@ -1,10 +1,21 @@
 import { bffApi } from "@/lib/api.bff"
+import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(req: Request) {
-  const res = await bffApi.get('/lists')
+async function forwardCookies() {
+  const cookieStore = await cookies()
+  cookieStore.getAll().map(c => `${c.name}=${c.value}`).join('; ')
+  return cookieStore
+}
+
+export async function GET() {
+  const res = await bffApi.get('/lists',/*  {
+    headers: {
+      Cookie: forwardCookies()
+    }
+  } */)
   return NextResponse.json(res.data)
 }
 
