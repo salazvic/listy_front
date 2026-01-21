@@ -8,7 +8,6 @@ export async function POST(req: Request) {
 
   const res = NextResponse.json({ ok: true })
 
-console.log("resp login:", res)
   res.cookies.set('access_token', data.access.access_token, {
     httpOnly: true,
     sameSite: 'lax',
