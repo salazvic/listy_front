@@ -7,7 +7,7 @@ export async function POST() {
     {},
     {
       headers: {
-        cookie: (await cookies()).toString()
+        cookie: cookies().toString()
       }
     }
   )

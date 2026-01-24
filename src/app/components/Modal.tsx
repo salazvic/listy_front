@@ -293,7 +293,7 @@ export default function Modal({
                     value
                   })
                 }
-                className="w-full bg-green-600 text-white py-2 rounded-md mb-2 disabled:opacity-50"
+                className="w-full bg-green-600 text-white py-2 rounded-md disabled:opacity-50"
               >
                 Confirmar
               </button>

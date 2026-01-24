@@ -10,6 +10,7 @@ export async function GET() {
     .getAll()
     .map(c => `${c.name}=${c.value}`)
     .join('; ')
+
   const res = await bffApi.get('/lists', {
     headers: {
       Cookie: cookieStore.toString()
@@ -20,8 +21,17 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json()
+  const cookie = await cookies()
+  const cookieStore = cookie
+    .getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join('; ')
 
-  const res = await  bffApi.post('/lists', body)  
+  const res = await  bffApi.post('/lists', body, {
+    headers: {
+      Cookie: cookieStore
+    }
+  })  
 
   return NextResponse.json(res.data, {status: 201})
 }
