@@ -7,7 +7,7 @@ export function useListSocket(idList: string) {
   const updateList = useListStore(s => s.updateList)
 
   useEffect(() => {
-    const socketList = listSocket()
+    const socketList = listSocket() 
 
     if(!socketList) return
 

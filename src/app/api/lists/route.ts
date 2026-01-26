@@ -11,11 +11,7 @@ export async function GET() {
     .map(c => `${c.name}=${c.value}`)
     .join('; ')
 
-  const res = await bffApi.get('/lists', {
-    headers: {
-      Cookie: cookieStore.toString()
-    }
-  })
+  const res = await bffApi.get('/lists')
   return NextResponse.json(res.data)
 }
 
