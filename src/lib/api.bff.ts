@@ -6,18 +6,3 @@ export const bffApi = axios.create({
   withCredentials: true,
 })
 
-bffApi.interceptors.request.use(async config => {
-  const cookieStore = await cookies()
-
-  const cookieHeader = cookieStore
-    .getAll()
-    .map(c => `${c.name}=${c.value}`)
-    .join('; ')
-
-  if (cookieHeader) {
-    config.headers.Cookie = cookieHeader
-  }
-
-  return config
-})
-

@@ -1,18 +1,22 @@
 import { bffApi } from "@/lib/api.bff"
+import { bffServerRequest } from "@/lib/bffServerRequest"
 import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export const dynamic = 'force-dynamic'
 
 export async function GET() {
-  const cookie = await cookies()
-  const cookieStore = cookie
-    .getAll()
-    .map(c => `${c.name}=${c.value}`)
-    .join('; ')
-
-  const res = await bffApi.get('/lists')
-  return NextResponse.json(res.data)
+  try {
+    const data = await bffServerRequest(async cookie => {
+      const res = await bffApi.get('/lists', {
+        headers: {Cookie: cookie}
+      })
+      return res.data
+    })
+  return NextResponse.json(data)
+  } catch (error) {
+    return new NextResponse(null, { status: 401 })
+  }
 }
 
 export async function POST(req: Request) {

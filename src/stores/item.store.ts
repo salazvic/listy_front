@@ -25,7 +25,6 @@ export const useItemStore = create<ItemState>((set) =>
 
   setItem: (items) => {
     if(!Array.isArray(items)) {
-      console.log('setItems esperaba un array:', items)
       return
     }
     set(() => ({items }))
