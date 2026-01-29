@@ -1,23 +1,20 @@
-import { bffApi } from "@/lib/api.bff";
-import { cookies } from "next/headers";
+import { bffApi } from '@/lib/api.bff'
+import { bffServerRequest } from '@/lib/bffServerRequest'
+import { NextResponse } from 'next/server'
 
 export async function POST() {
-  const { headers } = await bffApi.post(
-    '/auth/refresh',
-    {},
-    {
-      headers: {
-        cookie: cookies().toString()
-      }
-    }
-  )
+  try {
+    // IMPORTANTE: reenviar cookies
+    const data = await bffServerRequest(async cookie => {
+      const res = await bffApi.get('/lists', {
+        headers: {Cookie: cookie}
+      })
+      return res.data
+    })
 
-  const response = new Response(null, {status: 204})
-
-  const setCookie = headers['set-cookie']
-  if(setCookie) {
-    response.headers.set('set-cookie', setCookie[0])
+    return NextResponse.json(data)
+  } catch (error) {
+    return new NextResponse(null, { status: 401 })
   }
-
-  return response
 }
+ 
