@@ -1,6 +1,5 @@
 import { bffApi } from "@/lib/api.bff"
 import { bffServerRequest } from "@/lib/bffServerRequest"
-import { cookies } from "next/headers"
 import { NextResponse } from "next/server"
 
 export const dynamic = 'force-dynamic'
@@ -29,5 +28,6 @@ export async function POST(req: Request) {
     })  
     return res.data
   })
+  console.log("[CREATE LIST]:", data)
   return NextResponse.json(data, {status: 201})
 }
