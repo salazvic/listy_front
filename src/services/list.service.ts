@@ -31,6 +31,7 @@ export const ListService = {
       '/lists', 
       {name: nameList}
     )
+    return data
   },
 
   deleteList: async(id: string) => {

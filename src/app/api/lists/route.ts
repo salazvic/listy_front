@@ -28,5 +28,6 @@ export async function POST(req: Request) {
     })  
     return res.data
   })
+
   return NextResponse.json(data, {status: 201})
 }
