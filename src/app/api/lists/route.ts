@@ -28,6 +28,5 @@ export async function POST(req: Request) {
     })  
     return res.data
   })
-  console.log("[CREATE LIST]:", data)
   return NextResponse.json(data, {status: 201})
 }

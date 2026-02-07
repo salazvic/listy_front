@@ -8,6 +8,7 @@ import { useEffect, useState } from "react"
 import { useShallow } from "zustand/react/shallow"
 import { useUserStore } from "@/stores/useUserStore"
 import { UserService } from "@/services/user.service" 
+import { normalizeListFromApi } from "@/lib/utils"
 
 export default function ListsPage() {  
   const [open, setOpen] = useState(false)
@@ -17,6 +18,7 @@ export default function ListsPage() {
   ) 
   const setLists = useListStore(s => s.setLists)
   const setAllUsers = useUserStore(s => s.setAllUsers)
+  const upserList = useListStore(s => s.upsertList)
 
   const lists = listsAll.filter((list: any) => list.role !== 'editor' || list.role !== 'viewer')
 
@@ -32,7 +34,9 @@ export default function ListsPage() {
   }, [])
 
   const createList = async (nameList: string) => {
-    await ListService.createList(nameList)
+    const apiList = await ListService.createList(nameList)
+    
+    upserList(normalizeListFromApi(apiList))
     setOpen(false)
   }
 
