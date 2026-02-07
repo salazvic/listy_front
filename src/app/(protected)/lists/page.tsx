@@ -35,7 +35,7 @@ export default function ListsPage() {
 
   const createList = async (nameList: string) => {
     const apiList = await ListService.createList(nameList)
-    
+    console.log('[APILIST DATA]:', apiList)
     upserList(normalizeListFromApi(apiList))
     setOpen(false)
   }
