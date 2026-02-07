@@ -21,17 +21,13 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const cookie = await cookies()
-  const cookieStore = cookie
-    .getAll()
-    .map(c => `${c.name}=${c.value}`)
-    .join('; ')
-
-  const res = await  bffApi.post('/lists', body, {
-    headers: {
-      Cookie: cookieStore
-    }
-  })  
-
-  return NextResponse.json(res.data, {status: 201})
+  const data = await bffServerRequest(async cookie => {
+    const res = await  bffApi.post('/lists', body, {
+      headers: {
+        Cookie: cookie
+      }
+    })  
+    return res.data
+  })
+  return NextResponse.json(data, {status: 201})
 }

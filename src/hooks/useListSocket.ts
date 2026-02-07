@@ -5,6 +5,7 @@ import { useEffect } from "react"
 
 export function useListSocket(idList: string) {
   const updateList = useListStore(s => s.updateList)
+  const addUserList = useListStore(s => s.addUserList)
 
   useEffect(() => {
     const socketList = listSocket() 
@@ -16,6 +17,8 @@ export function useListSocket(idList: string) {
     socketList.on(Events.LIST_UPDATED, (payload) => {
       updateList(payload.id, payload.name)
     })
+
+    
 
     return () => {
       socketList.emit(Events.LIST_LEFT, {listId: idList});
